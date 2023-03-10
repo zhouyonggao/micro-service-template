@@ -1,0 +1,69 @@
+syntax = "proto3";
+package kratos.api;
+
+option go_package = "microServiceTemplate/internal/conf;conf";
+
+import "google/protobuf/duration.proto";
+
+message Bootstrap {
+  Server server = 1;
+  Data data = 2;
+  Logs logs = 3;
+  Alarm alarm = 4;
+}
+
+message Server {
+  message HTTP {
+    string network = 1;
+    string addr = 2;
+    google.protobuf.Duration timeout = 3;
+  }
+  message GRPC {
+    string network = 1;
+    string addr = 2;
+    google.protobuf.Duration timeout = 3;
+    string token = 4;
+  }
+  HTTP http = 1;
+  GRPC grpc = 2;
+}
+
+message Data {
+  message Database {
+    string driver = 1;
+    string source = 2;
+    int32 maxIdle = 3;
+    int32 maxOpen = 4;
+    google.protobuf.Duration maxLifetime = 5;
+  }
+  message Redis {
+    string network = 1;
+    string addr = 2;
+    google.protobuf.Duration readTimeout = 3;
+    google.protobuf.Duration writeTimeout = 4;
+    string password = 5;
+    int32 poolSize = 6;
+    int32 minIdleConns = 7;
+    google.protobuf.Duration connMaxIdleTime = 8;
+  }
+
+  message RocketMq {
+    repeated string nameServers = 1;
+    string productGroup = 2;
+    int32 retry = 3;
+  }
+
+
+  Database database = 1;
+  Redis redis = 2;
+  RocketMq rocketMq = 3;
+}
+
+message Logs {
+  string business = 1;
+  string access = 2;
+}
+
+message Alarm {
+  string dingToken = 1;
+}

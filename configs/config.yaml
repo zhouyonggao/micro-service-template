@@ -1,0 +1,34 @@
+server:
+  grpc:
+    addr: 0.0.0.0:9000
+    timeout: 5s
+    token: D#W@gdS@
+data:
+  database:
+    driver: mysql
+    source: root:Lsxd123.@tcp(192.168.6.71:3308)/cmbi?parseTime=True&loc=Local
+    maxIdle: 5 #最大的空闲连接数
+    maxOpen: 20 #最大连接数，0表示不受限制
+    maxLifetime: 5s #连接复用的最大生命周期
+  redis: #没有则注释此属性
+    addr: 192.168.6.193:6380
+    password: lansexiongdi
+    readTimeout: 3s
+    writeTimeout: 3s
+    poolSize: 5 #连接池大小，不配置，或配置为0表示不启用连接池
+    minIdleConns: 2 #最小空闲连接数
+    connMaxIdleTime: 30s #每个连接最大空闲时间，如果超过了这个时间会被关闭
+  rocketMq: #没有则注释此属性
+    nameServers:
+      - "192.168.6.102:9876" #连接地址
+    productGroup: orderService #生产者的 group 名称
+    retry: 2 #send失败重试次数
+
+#配置日志
+logs:
+  business: business.log #业务日志路径：如果不写日志，则不配置或配置为空
+  access: access.log #访问日志路径：如果不写日志，则不配置或配置为空
+
+#告警配置
+alarm:
+  dingToken: 2e3169276a54375e3c81dc65237ec94f1bc9a27352fce7fbcf3a2492e8ccc862 #推送群机器人
